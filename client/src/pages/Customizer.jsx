@@ -50,6 +50,24 @@ const Customizer = () => {
 
     try {
       // call our backend to generate an ai image!
+      setGeneratingImg(true);
+
+      const respone = await fetch('http://localhost:8081/api/v1/dalle', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+        })
+      });
+
+      const data = await respone.json();
+      if(!data.status) {
+        alert(data.message);
+        return;
+      }
+      handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (e) {
       alert(e);
     } finally {
@@ -58,22 +76,22 @@ const Customizer = () => {
     }
   }
 
-  const handleDecals = (type, result) => {
+  const handleDecals = (type, result) => {    
     const decalType = DecalTypes[type];
 
     state[decalType.stateProperty] = result;
 
     if(!activeFilterTab[decalType.filterTab]) {
-      handleActiveFilterTab(decaltType.filterTab);
+      handleActiveFilterTab(decalType.filterTab);
     }
   }
 
-  const handleActiveFilterTab = (tabName) => {
+  const handleActiveFilterTab = (tabName) => {    
     switch (tabName) {
       case "logoShirt":
         state.isLogoTexture = !activeFilterTab[tabName];
         break;
-      case "stylishTexture":
+      case "stylishShirt":
         state.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
