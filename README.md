@@ -1,4 +1,4 @@
-# Build and Deploy an AI-Powered 3D Website Using React
+# AI-Powered 3D Website Using React
 
 ![Homepage](/client/public/homepage.png)
 ![Colorpicker](client/public/colorpicker.png)
